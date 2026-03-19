@@ -1,6 +1,6 @@
 import contextvars
-from collections.abc import MutableMapping
-from typing import Any, Iterator, Optional, cast
+from collections.abc import Iterator, MutableMapping
+from typing import Any, Optional, cast
 
 # Context variable to hold the current Django session
 django_session_ctx: contextvars.ContextVar[Optional[Any]] = contextvars.ContextVar("django_session", default=None)

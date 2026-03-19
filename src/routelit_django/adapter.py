@@ -173,15 +173,16 @@ class RouteLitDjangoAdapter:
                     )
                 finally:
                     django_session_ctx.reset(token)
+                return  # type: ignore[return-value]
 
             return StreamingHttpResponse(
                 stream_with_session(),
                 content_type="application/jsonlines",
             )
 
+        # GET request: handle with session context
         token = django_session_ctx.set(request.session)
         try:
-            res: HttpResponseBase = self._handle_get_request(view_fn, req, **kwargs)
-            return res
+            return self._handle_get_request(view_fn, req, **kwargs)
         finally:
             django_session_ctx.reset(token)
