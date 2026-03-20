@@ -5,6 +5,7 @@ from typing import Any, Optional, cast
 # Context variable to hold the current Django session
 django_session_ctx: contextvars.ContextVar[Optional[Any]] = contextvars.ContextVar("django_session", default=None)
 
+
 class DjangoSessionStorage(MutableMapping[str, Any]):
     """
     A RouteLit session storage implementation that delegates to the current Django request session.

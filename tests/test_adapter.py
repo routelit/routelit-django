@@ -21,13 +21,16 @@ def mock_routelit():
     mock_rl.get_extra_body_content.return_value = ""
     return mock_rl
 
+
 @pytest.fixture
 def factory():
     return RequestFactory()
 
+
 def test_adapter_init(mock_routelit):
     adapter = RouteLitDjangoAdapter(mock_routelit)
     assert adapter.routelit == mock_routelit
+
 
 def test_response_get(mock_routelit, factory):
     adapter = RouteLitDjangoAdapter(mock_routelit)
@@ -45,6 +48,7 @@ def test_response_get(mock_routelit, factory):
     assert response.status_code == 200
     assert b"<!DOCTYPE html>" in response.content
 
+
 def test_response_post(mock_routelit, factory):
     adapter = RouteLitDjangoAdapter(mock_routelit)
     request = factory.post("/", data="{}", content_type="application/json")
@@ -56,6 +60,7 @@ def test_response_post(mock_routelit, factory):
     assert response.status_code == 200
     assert b"action" in response.content
 
+
 def test_stream_response_post(mock_routelit, factory):
     adapter = RouteLitDjangoAdapter(mock_routelit)
     request = factory.post("/", data="{}", content_type="application/json")
@@ -66,6 +71,7 @@ def test_stream_response_post(mock_routelit, factory):
     response = adapter.stream_response(Mock(), request)
     assert isinstance(response, StreamingHttpResponse)
     assert response["Content-Type"] == "application/jsonlines"
+
 
 def test_configure(mock_routelit):
     adapter = RouteLitDjangoAdapter(mock_routelit)

@@ -10,6 +10,7 @@ def test_storage_outside_context():
     del storage["key"]
     assert "key" not in storage
 
+
 def test_storage_inside_context():
     session = {"foo": "bar"}
     storage = DjangoSessionStorage()
